@@ -55,10 +55,7 @@ public class GameEngine : MonoBehaviour {
         MakeUnits();
         MakeBuilding();
         FillMap();
-        DrawUnits();
-        DrawBuildings();
         playGame();
-
     }
 
     // puts units and buildings on map
@@ -71,12 +68,20 @@ public class GameEngine : MonoBehaviour {
         //puts buildings on map
         foreach (Building House in BuildArray)
         {
-            DrawBuildings();
+            Instantiate(Resources.Load("grass"), new Vector3((i * offset), (k * offset), -1), Quaternion.identity);
         }
     }
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0;i < UnitsArray.Length; i++)
+        {
+            DrawUnits(UnitsArray[i]);
+        }
+        for(int k = 0; k < BuildArray.Length; k++)
+        {
+            DrawBuildings(BuildArray[i]);
+        }
         if ((gametime % Refreash == 0) && (UnitsArray[i].Hp >= 0 || BuildArray[i].Health >= 0))
         {
             playGame();
@@ -112,7 +117,7 @@ public class GameEngine : MonoBehaviour {
                     }
                     //sets new units to map arrary
                     TempUnit[UnitsArray.Length] = (Names as FactoryBuilding).SpawnUnit();
-                    //TempUnit[TempUnit.Length - 1].Ypostion, TempUnit[TempUnit.Length - 1].Xpostion = TempUnit[TempUnit.Length - 1].Symbol;
+                    Instantiate(Resources.Load("grass"), new Vector3((i * offset), (k * offset), -1), Quaternion.identity);
                     UnitsArray = TempUnit;
                 }
             }
@@ -132,7 +137,7 @@ public class GameEngine : MonoBehaviour {
         }
     }
     //units
-    public void DrawUnits()
+    public void DrawUnits(Unit Hero)
     {
         if (UnitsArray[i].GetType().ToString() == "MeleeUnit")
         {
@@ -162,7 +167,7 @@ public class GameEngine : MonoBehaviour {
         }
     }
     // building
-    public void DrawBuildings()
+    public void DrawBuildings(Building Build)
     {
 
         if (BuildArray.GetType().ToString() == "FactoryBuilding")
@@ -400,8 +405,9 @@ public class GameEngine : MonoBehaviour {
             if (UnitsArray[i] != null)
             {
                 if (UnitsArray[i].Isdead() == false)
-                {
+                {                  
                     int closestFoe = UnitsArray[i].WhoisclosestUnit(UnitsArray);
+                    
                     //check to see if unit flees
                     if (UnitsArray[i].Fleeing() == false)
                     {
@@ -419,6 +425,14 @@ public class GameEngine : MonoBehaviour {
                             int move = UnitsArray[i].Move(UnitsArray[closestFoe]);
                             MoveUnit(i, move);
                         }
+                        for (int k = 0; k < BuildArray.Length; k++)
+                        {
+                            int closestBuild = UnitsArray[i].NearBuilding(BuildArray);
+                           // if (UnitsArray[i].NearBuilding(closestBuild) == true)
+                            {
+                                //UnitsArray[i].KillBuild(build);
+                            }
+                        }                       
                     }
                 }
             }

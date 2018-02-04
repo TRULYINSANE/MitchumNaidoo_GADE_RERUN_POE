@@ -66,7 +66,7 @@ using UnityEngine;
         }
     }
 
-    protected char Faction
+    public char Faction
     {
         get
         {

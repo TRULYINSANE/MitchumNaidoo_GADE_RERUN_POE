@@ -97,9 +97,14 @@ using System.IO;
             Hpleft = enemy.Hp - this.Attack;
             return Hpleft;
         }
-
-        // checks for attack range
-        public override bool CheckingforAttackrange(Unit enemy)
+    public override int KillBuild(Building build)
+    {
+        int Hpleft;
+        Hpleft = build.Health - this.Attack;
+        return Hpleft;
+    }
+    // checks for attack range
+    public override bool CheckingforAttackrange(Unit enemy)
         {
             int distance;
             distance = (Math.Abs(this.Xpostion - enemy.Xpostion) + Math.Abs(this.Ypostion - enemy.Ypostion));
@@ -111,11 +116,9 @@ using System.IO;
             {
                 return false;
             }
-
         }
-
-        // checks for closest unit
-        public override int WhoisclosestUnit(Unit[] Array1)
+    // checks for closest unit
+    public override int WhoisclosestUnit(Unit[] Array1)
         {
             int TempClosest = 100;
             int distance;
@@ -138,9 +141,31 @@ using System.IO;
             }
             return unit;
         }
+    public override int NearBuilding(Building[] Array2)
+    {
+        int TempClosest = 40;
+        int distance;
+        int build = 1;
+        int count = 0;
+        for (int i = 0; i < Array2.Length; i++)
+        {
+            if (Array2[i] != null && Array2[i].IsDead() != true && Array2[i] != this && Array2[i].Faction != this.Faction)
+            {
+                distance = (Math.Abs(this.Xpostion - Array2[i].Xpos) + Math.Abs(this.Ypostion - Array2[i].Ypos));
 
-        //checks for unit to flee
-        public override bool Fleeing()
+                if (distance < TempClosest)
+                {
+                    distance = TempClosest;
+                    build = count;
+                }
+            }
+            count++;
+        }
+        return build;
+    }
+
+    //checks for unit to flee
+    public override bool Fleeing()
         {
             if (Hp <= Maxhp / 0.25)
             {

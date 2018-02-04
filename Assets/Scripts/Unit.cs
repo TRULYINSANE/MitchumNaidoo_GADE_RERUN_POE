@@ -185,7 +185,7 @@ using UnityEngine;
         //methords
         public abstract int Move(Unit enemy);
         public abstract int Combat(Unit enemy);
-        public abstract int WhoisclosestUnit(Unit[] Array);
+        public abstract int WhoisclosestUnit(Unit[] Array1);
         public abstract bool CheckingforAttackrange(Unit enemy);
         public abstract bool Fleeing();
         public abstract bool Isdead();
@@ -194,6 +194,8 @@ using UnityEngine;
         public abstract void Save();
         public abstract string SaveString();
         public abstract void Read();
+    public abstract int KillBuild(Building build);
+    public abstract int NearBuilding(Building[] Array2);
 
 
     }
