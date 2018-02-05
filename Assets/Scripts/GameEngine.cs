@@ -130,10 +130,9 @@ public class GameEngine : MonoBehaviour {
     //mapcrearion
     public void CreateMap(float X, float Y)
     {
-        for (int i = -12; i < 8; i++)
+        for (int i = -13; i < 7; i++)
         {
-
-            for (int k = -2; k < 18; k++)
+            for (int k = -3; k < 17; k++)
             {
                 Instantiate(Resources.Load("grass"), new Vector3((X + i * offset), (Y + k * offset), -1), Quaternion.identity);
             }
