@@ -146,12 +146,12 @@ public class GameEngine : MonoBehaviour {
             if (Hero.Symbol == 'M')
             {
                 Instantiate(Resources.Load("heromelee"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
             }
             if (Hero.Symbol == 'm')
             {
                 Instantiate(Resources.Load("enemymelee"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
             }
         }
         if (Hero.GetType().ToString() == "RangeUnit")
@@ -159,12 +159,12 @@ public class GameEngine : MonoBehaviour {
             if (Hero.Symbol == 'R')
             {
                 Instantiate(Resources.Load("herorange"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
             }
             if (Hero.Symbol == 'r')
             {
                 Instantiate(Resources.Load("enemyrange"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
             }
         }
     }
@@ -177,12 +177,12 @@ public class GameEngine : MonoBehaviour {
             if (Build.Symbol == 'F')
             {
                 Instantiate(Resources.Load("herofactory"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
             if (Build.Symbol == 'f')
             {
                 Instantiate(Resources.Load("enemyfactory"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
         }
         if (Build.GetType().ToString() == "ResourceBuilding")
@@ -190,12 +190,12 @@ public class GameEngine : MonoBehaviour {
             if (Build.Symbol == 'R')
             {
                 Instantiate(Resources.Load("heroresource"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
             if (Build.Symbol == 'r')
             {
                 Instantiate(Resources.Load("enemyresource"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("hp10"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
         }
     }
@@ -203,53 +203,54 @@ public class GameEngine : MonoBehaviour {
     //unit hp bars
     public string getHpUnit(Unit hero)
     {
+
         string returnval = "hp";
         double hpPercent = ((double)hero.Hp / (double)hero.Maxhp) * 10;
         float roundedHp = Mathf.CeilToInt((float)hpPercent);
         returnval = returnval + roundedHp;
         if (roundedHp > 9 && roundedHp <= 10)
         {
-            return returnval = "hp10";
+            returnval = "hp10";
         }
         if (roundedHp <= 9 && roundedHp > 8)
         {
-            return returnval = "hp9";
+            returnval = "hp9";
         }
         if (roundedHp <= 8 && roundedHp > 7)
         {
-            return returnval = "hp8";
+            returnval = "hp8";
         }
         if (roundedHp <= 7 && roundedHp > 6)
         {
-            return returnval = "hp7";
+            returnval = "hp7";
         }
         if (roundedHp <= 6 && roundedHp > 5)
         {
-            return returnval = "hp6";
+            returnval = "hp6";
         }
         if (roundedHp <= 5 && roundedHp > 4)
         {
-            return returnval = "hp5";
+            returnval = "hp5";
         }
         if (roundedHp <= 4 && roundedHp > 3)
         {
-            return returnval = "hp4";
+            returnval = "hp4";
         }
-        if (roundedHp <= 3 && roundedHp > 2)
+        if (roundedHp == 3 && roundedHp > 2)
         {
-            return returnval = "hp3";
+            returnval = "hp3";
         }
         if (roundedHp <= 2 && roundedHp > 1)
         {
-            return returnval = "hp2";
+            returnval = "hp2";
         }
         if (roundedHp <= 1 && roundedHp > 0)
         {
-            return returnval = "hp1";
+            returnval = "hp1";
         }
         if (roundedHp <= 0)
         {
-            return returnval = "hp0";
+            returnval = "hp0";
         }
         return returnval;
     }
@@ -263,47 +264,47 @@ public class GameEngine : MonoBehaviour {
         returnval = returnval + roundedHp;
         if (roundedHp > 9 && roundedHp <= 10)
         {
-            return returnval = "hp10";
+            returnval = "hp10";
         }
         if (roundedHp <= 9 && roundedHp > 8)
         {
-            return returnval = "hp9";
+            returnval = "hp9";
         }
         if (roundedHp <= 8 && roundedHp > 7)
         {
-            return returnval = "hp8";
+            returnval = "hp8";
         }
         if (roundedHp <= 7 && roundedHp > 6)
         {
-            return returnval = "hp7";
+            returnval = "hp7";
         }
         if (roundedHp <= 6 && roundedHp > 5)
         {
-            return returnval = "hp6";
+            returnval = "hp6";
         }
         if (roundedHp <= 5 && roundedHp > 4)
         {
-            return returnval = "hp5";
+            returnval = "hp5";
         }
         if (roundedHp <= 4 && roundedHp > 3)
         {
-            return returnval = "hp4";
+            returnval = "hp4";
         }
-        if (roundedHp <= 3 && roundedHp > 2)
+        if (roundedHp == 3 && roundedHp > 2)
         {
-            return returnval = "hp3";
+            returnval = "hp3";
         }
         if (roundedHp <= 2 && roundedHp > 1)
         {
-            return returnval = "hp2";
+            returnval = "hp2";
         }
         if (roundedHp <= 1 && roundedHp > 0)
         {
-            return returnval = "hp1";
+            returnval = "hp1";
         }
         if (roundedHp <= 0)
         {
-            return returnval = "hp0";
+            returnval = "hp0";
         }
         return returnval;
     }
@@ -348,7 +349,6 @@ public class GameEngine : MonoBehaviour {
     {
         for (int i = 0; i < BuildArray.Length; i++)
         {
-
             int tempX = r.Next(0, 20);
             int tempY = r.Next(0, 20);
             int BuildingType = r.Next(0, 4);
@@ -427,6 +427,7 @@ public class GameEngine : MonoBehaviour {
                             int move = UnitsArray[i].Move(UnitsArray[closestFoe]);
                             MoveUnit(i, move);
                         }
+                        //building combat
                         for (int k = 0; k < BuildArray.Length; k++)
                         {
                             int closestBuild = UnitsArray[i].NearBuilding(BuildArray);
@@ -512,8 +513,6 @@ public class GameEngine : MonoBehaviour {
         foreach (GameObject temp in Deletethis)
         {
             Destroy(temp.gameObject);
-        }
-       
+        }      
     }
-
 }

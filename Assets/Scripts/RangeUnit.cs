@@ -34,50 +34,29 @@ using System.IO;
             //move in x
             if (distanceX > distanceY && distanceX > 0 && this.Xpostion != 0)
             {
-                return moveonMap = 3;
-            }
-            else if (this.Xpostion != 19)
-            {
-                return moveonMap = 4;
+                 moveonMap = 3;
             }
 
-            if (distanceY == 0 && this.Xpostion != 0)
-            {
-                return moveonMap = 3;
-            }
-            else if (this.Xpostion != 19)
-            {
-                return moveonMap = 4;
-            }
+        if (distanceY == 0 && this.Xpostion != 0)
+        {
+            moveonMap = 3;
+        }
 
-            if (distanceX == distanceY && this.Xpostion != 0)
-            {
-                return moveonMap = 3;
-            }
-            else if (this.Xpostion != 19)
-            {
-                return moveonMap = 4;
-            }
+        if (distanceX == distanceY && this.Xpostion != 0)
+        {
+            moveonMap = 3;
+        }
 
             //move in y
             if (distanceX < distanceY && distanceY > 0 && this.Ypostion != 0)
             {
-                return moveonMap = 1;
-            }
-            else if (this.Ypostion != 19)
-            {
-                return moveonMap = 2;
-            }
+                 moveonMap = 1;
+            }         
 
             if (distanceX == 0 && this.Ypostion != 0)
             {
-                return moveonMap = 1;
+                 moveonMap = 1;
             }
-            else if (this.Ypostion != 19)
-            {
-                return moveonMap = 2;
-            }
-
             return moveonMap;
         }
 
