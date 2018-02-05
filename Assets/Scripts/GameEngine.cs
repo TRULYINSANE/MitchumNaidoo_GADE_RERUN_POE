@@ -9,7 +9,7 @@ public class GameEngine : MonoBehaviour {
     public int tick = 1;
     protected int i;
     protected int k;
-    float offset = 2f;
+    float offset = 2.5f;
     private int gametime = 0;
     private const int Refreash = 60;
     System.Random r = new System.Random();
@@ -54,7 +54,7 @@ public class GameEngine : MonoBehaviour {
         CreateMap(X, Y);
         MakeUnits();
         MakeBuilding();
-        FillMap();
+      //  FillMap();
         playGame();
     }
 
@@ -64,6 +64,7 @@ public class GameEngine : MonoBehaviour {
         foreach (Unit Heros in UnitsArray)
         {
             Instantiate(Resources.Load("grass"), new Vector3((i * offset), (k * offset), -1), Quaternion.identity);
+
         }
         //puts buildings on map
         foreach (Building House in BuildArray)
@@ -74,19 +75,21 @@ public class GameEngine : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0;i < UnitsArray.Length; i++)
-        {
-            DrawUnits(UnitsArray[i]);
-        }
-        for(int k = 0; k < BuildArray.Length; k++)
-        {
-            DrawBuildings(BuildArray[i]);
-        }
+        
         if ((gametime % Refreash == 0) && (UnitsArray[i].Hp >= 0 || BuildArray[i].Health >= 0))
         {
             playGame();
             Redraw();
+            for (int i = 0; i < UnitsArray.Length; i++)
+            {
+                DrawUnits(UnitsArray[i]);
+            }
+            for (int k = 0; k < BuildArray.Length; k++)
+            {
+                DrawBuildings(BuildArray[i]);
+            }
         }
+       
         gametime++;
     }
 
@@ -117,7 +120,6 @@ public class GameEngine : MonoBehaviour {
                     }
                     //sets new units to map arrary
                     TempUnit[UnitsArray.Length] = (Names as FactoryBuilding).SpawnUnit();
-                    Instantiate(Resources.Load("grass"), new Vector3((i * offset), (k * offset), -1), Quaternion.identity);
                     UnitsArray = TempUnit;
                 }
             }
@@ -128,41 +130,42 @@ public class GameEngine : MonoBehaviour {
     //mapcrearion
     public void CreateMap(float X, float Y)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = -12; i < 8; i++)
         {
-            for (int k = 0; k < 10; k++)
+
+            for (int k = -2; k < 18; k++)
             {
-                Instantiate(Resources.Load("grass"), new Vector3((i * offset), (k * offset), -1), Quaternion.identity);
+                Instantiate(Resources.Load("grass"), new Vector3((X + i * offset), (Y + k * offset), -1), Quaternion.identity);
             }
         }
     }
     //units
     public void DrawUnits(Unit Hero)
     {
-        if (UnitsArray[i].GetType().ToString() == "MeleeUnit")
+        if (Hero.GetType().ToString() == "MeleeUnit")
         {
-            if (UnitsArray[i].Symbol == 'M')
+            if (Hero.Symbol == 'M')
             {
-                Instantiate(Resources.Load("heromelee"), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(UnitsArray[i])), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("heromelee"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
             }
-            if (UnitsArray[i].Symbol == 'm')
+            if (Hero.Symbol == 'm')
             {
-                Instantiate(Resources.Load("enemymelee"), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(UnitsArray[i])), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("enemymelee"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
             }
         }
-        if (UnitsArray[i].GetType().ToString() == "RangeUnit")
+        if (Hero.GetType().ToString() == "RangeUnit")
         {
-            if (UnitsArray[i].Symbol == 'R')
+            if (Hero.Symbol == 'R')
             {
-                Instantiate(Resources.Load("herorange"), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(UnitsArray[i])), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("herorange"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
             }
-            if (UnitsArray[i].Symbol == 'r')
+            if (Hero.Symbol == 'r')
             {
-                Instantiate(Resources.Load("enemyrange"), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpUnit(UnitsArray[i])), new Vector3(offset * UnitsArray[i].Xpostion, offset * UnitsArray[i].Ypostion, -3), Quaternion.identity);
+                Instantiate(Resources.Load("enemyrange"), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpUnit(Hero)), new Vector3(offset * Hero.Xpostion, offset * Hero.Ypostion, -3), Quaternion.identity);
             }
         }
     }
@@ -170,30 +173,30 @@ public class GameEngine : MonoBehaviour {
     public void DrawBuildings(Building Build)
     {
 
-        if (BuildArray.GetType().ToString() == "FactoryBuilding")
+        if (Build.GetType().ToString() == "FactoryBuilding")
         {
-            if (BuildArray[i].Symbol == 'F')
+            if (Build.Symbol == 'F')
             {
-                Instantiate(Resources.Load("herofactory"), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(BuildArray[i])), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("herofactory"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
-            if (BuildArray[i].Symbol == 'f')
+            if (Build.Symbol == 'f')
             {
-                Instantiate(Resources.Load("enemyfactory"), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(BuildArray[i])), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("enemyfactory"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
         }
-        if (BuildArray[i].GetType().ToString() == "ResourceBuilding")
+        if (Build.GetType().ToString() == "ResourceBuilding")
         {
-            if (BuildArray[i].Symbol == 'R')
+            if (Build.Symbol == 'R')
             {
-                Instantiate(Resources.Load("heroresource"), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(BuildArray[i])), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("heroresource"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
-            if (BuildArray[i].Symbol == 'r')
+            if (Build.Symbol == 'r')
             {
-                Instantiate(Resources.Load("enemyresource"), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -2), Quaternion.identity);
-                Instantiate(Resources.Load(getHpBuild(BuildArray[i])), new Vector3(offset * BuildArray[i].Xpos, offset * BuildArray[i].Ypos, -3), Quaternion.identity);
+                Instantiate(Resources.Load("enemyresource"), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -2), Quaternion.identity);
+                Instantiate(Resources.Load(getHpBuild(Build)), new Vector3(offset * Build.Xpos, offset * Build.Ypos, -3), Quaternion.identity);
             }
         }
     }
@@ -394,8 +397,8 @@ public class GameEngine : MonoBehaviour {
                 UnitsArray[Hero].Xpostion = (UnitsArray[Hero].Xpostion + 1);
                 break;
         }
-        FillMap();
-        Redraw();
+       // FillMap();
+        //Redraw();
     }
     public void MovementCombat()
     {
@@ -511,8 +514,7 @@ public class GameEngine : MonoBehaviour {
         {
             Destroy(temp.gameObject);
         }
-        CreateUnits();
-        createBuilding();
+       
     }
 
 }
